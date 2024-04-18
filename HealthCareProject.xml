@@ -3,9 +3,9 @@
     <types>
       <struct name="vitalSign">
         <member name="patient_ID" type="int64" key="true"/>
-        <member name="heartRate" type="float32"/>
-        <member name="bloodPressure" type="float32"/>
-        <member name="oxygenSaturation" type="float32"/>
+        <member name="heartRate" type="int64"/>
+        <member name="bloodPressure" type="int64"/>
+        <member name="oxygenSaturation" type="int64"/>
         <member name="timestamp" type="int64"/>
       </struct>
     </types>
