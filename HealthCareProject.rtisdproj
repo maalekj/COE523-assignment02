@@ -1,0 +1,34 @@
+{
+  "ui_projectName": "HealthCareProject",
+  "ui_settings": {
+    "confirmDelete": true,
+    "showEZSecure": false,
+    "enableValuetypes": false,
+    "autosave": 1,
+    "enforceSnippetSeparation": true,
+    "useAsSnippetIfName": false,
+    "enableValidation": true
+  },
+  "ui_lastSaveTime": "18/4/2024 @ 4:45:21",
+  "ui_creationDate": "18/4/2024 @ 4:22:37",
+  "ui_creationSysDVersion": "7.2.0",
+  "ui_projectNotes": "",
+  "ui_include": [
+    {
+      "path": "BaselineRoot.documentationONLY.xml",
+      "readonly": true,
+      "builtin": true
+    },
+    {
+      "path": "BuiltinProfiles.documentationONLY.xml",
+      "readonly": true,
+      "builtin": true
+    },
+    {
+      "path": "HealthCareProject.xml",
+      "readonly": false,
+      "builtin": false
+    }
+  ],
+  "ui_projectGUID": "8db5e300-48c8-c6a8-547a-2461ff57d939"
+}
