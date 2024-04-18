@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dds xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/7.2.0/rti_routing_service.xsd" version="7.2.0">
+    <types>
+      <struct name="vitalSign">
+        <member name="patient_ID" type="int64" key="true"/>
+        <member name="heartRate" type="float32"/>
+        <member name="bloodPressure" type="float32"/>
+        <member name="oxygenSaturation" type="float32"/>
+        <member name="timestamp" type="int64"/>
+      </struct>
+    </types>
+
+    <domain_library name="myDomainLibrary">
+      <domain name="myDomain" domain_id="50">
+        <register_type name="vitalSign" type_ref="vitalSign"/>
+        <topic name="SensorToServerTopic" register_type_ref="vitalSign"/>
+        <topic name="ServerToProvidersTopic" register_type_ref="vitalSign"/>
+      </domain>
+    </domain_library>
+
+    <domain_participant_library name="MYDomainParticipantLibrary">
+      <domain_participant name="SensorDomainParticipant" domain_ref="myDomainLibrary::myDomain">
+        <publisher name="VitalPublisher">
+          <data_writer name="SensorToServerTopicWriter" topic_ref="SensorToServerTopic"/>
+        </publisher>
+      </domain_participant>
+      <domain_participant name="CentralServerDomainParticipant" domain_ref="myDomainLibrary::myDomain">
+        <publisher name="StoredDatePublisher">
+          <data_writer name="ServerToProvidersTopicWriter" topic_ref="ServerToProvidersTopic"/>
+        </publisher>
+        <subscriber name="NewDateSubscriber">
+          <data_reader name="SensorToServerTopicReader" topic_ref="SensorToServerTopic"/>
+        </subscriber>
+      </domain_participant>
+      <domain_participant name="HealthCareProvider" domain_ref="myDomainLibrary::myDomain">
+        <subscriber name="StoredDateSubscriber">
+          <data_reader name="ServerToProvidersTopicReader" topic_ref="ServerToProvidersTopic"/>
+        </subscriber>
+      </domain_participant>
+    </domain_participant_library>
+
+</dds>
