@@ -19,13 +19,11 @@
     </domain_library>
 
     <domain_participant_library name="MyDomainParticipantLibrary">
-
       <domain_participant name="SensorDomainParticipant" domain_ref="myDomainLibrary::myDomain">
         <publisher name="VitalPublisher">
           <data_writer name="SensorToServerTopicWriter" topic_ref="SensorToServerTopic"/>
         </publisher>
       </domain_participant>
-
       <domain_participant name="CentralServerDomainParticipant" domain_ref="myDomainLibrary::myDomain">
         <publisher name="StoredDatePublisher">
           <data_writer name="ServerToProvidersTopicWriter" topic_ref="ServerToProvidersTopic"/>
@@ -34,10 +32,16 @@
           <data_reader name="SensorToServerTopicReader" topic_ref="SensorToServerTopic"/>
         </subscriber>
       </domain_participant>
-     
       <domain_participant name="HealthCareProvider" domain_ref="myDomainLibrary::myDomain">
         <subscriber name="StoredDateSubscriber">
-          <data_reader name="ServerToProvidersTopicReader" topic_ref="ServerToProvidersTopic"/>
+          <data_reader name="ServerToProvidersTopicReader" topic_ref="ServerToProvidersTopic">
+            <content_filter name="patientFilter" kind="builtin.sql">
+              <expression>patient_ID = %0</expression>
+              <expression_parameters>
+                <element>$(subscribeIntoPatient)</element>
+              </expression_parameters>
+            </content_filter>
+          </data_reader>
         </subscriber>
       </domain_participant>
     </domain_participant_library>
