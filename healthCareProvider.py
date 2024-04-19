@@ -3,12 +3,21 @@ import time
 import rticonnextdds_connector as rti
 from os import path as os_path
 import os
+import sys
 
 file_path = os_path.dirname(os_path.abspath(__file__))
 
-os.environ["subscribeIntoPatient"] = str(
-    1
-)  # TODO: Change (1) to the patient ID you got as parameter from the command line argument (like python healthCareProvider.py <patient_id>)
+# check if the patient ID is provided as a parameter
+if len(sys.argv) < 2:
+    print(
+        "Please provide the patient ID as a parameter (e.g. python healthCareProvider.py <patient_id>)"
+    )
+    sys.exit(1)
+
+print(sys.argv[1])
+print(type(sys.argv[1]))
+os.environ["subscribeIntoPatient"] = sys.argv[1]
+
 
 with rti.open_connector(
     config_name="MyDomainParticipantLibrary::HealthCareProvider",

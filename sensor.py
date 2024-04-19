@@ -3,10 +3,18 @@ import time
 import rticonnextdds_connector as rti
 from os import path as os_path
 import os
+import sys
 
 file_path = os_path.dirname(os_path.abspath(__file__))
 
-patient_id = 1  # TODO: Change this to the patient ID you got as parameter from the command line argument (like python sensor.py <patient_id>)
+# check if the patient ID is provided as a parameter
+if len(sys.argv) < 2:
+    print(
+        "Please provide the patient ID as a parameter (e.g. python sensor.py <patient_id>)"
+    )
+    sys.exit(1)
+
+patient_id = sys.argv[1]
 
 os.environ["subscribeIntoPatient"] = str(
     patient_id
@@ -19,7 +27,8 @@ with rti.open_connector(
     output = connector.get_output("VitalPublisher::SensorToServerTopicWriter")
 
     for i in range(1, 500):
-        output.instance.set_number("patient_ID", patient_id)
+        # generate random data as simulation of real sensors.
+        output.instance.set_number("patient_ID", int(patient_id))
         output.instance.set_number("heartRate", random.randint(40, 160))
         output.instance.set_number("bloodPressure", random.randint(60, 180))
         output.instance.set_number("oxygenSaturation", random.randint(60, 100))
