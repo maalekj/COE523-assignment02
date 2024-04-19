@@ -10,6 +10,44 @@
       </struct>
     </types>
 
+    <qos_library name="MyQosLibrary">
+      <qos_profile name="MyQosProfile" base_name="BuiltinQosLib::Generic.StrictReliable" is_default_qos="true">
+        <topic_qos>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <reliability>
+            <kind>BEST_EFFORT_RELIABILITY_QOS</kind>
+          </reliability>
+          <history>
+            <kind>KEEP_ALL_HISTORY_QOS</kind>
+          </history>
+        </topic_qos>
+        <datareader_qos>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <reliability>
+            <kind>RELIABLE_RELIABILITY_QOS</kind>
+          </reliability>
+          <history>
+            <kind>KEEP_ALL_HISTORY_QOS</kind>
+          </history>
+        </datareader_qos>
+        <datawriter_qos>
+          <durability>
+            <kind>TRANSIENT_LOCAL_DURABILITY_QOS</kind>
+          </durability>
+          <reliability>
+            <kind>RELIABLE_RELIABILITY_QOS</kind>
+          </reliability>
+          <history>
+            <kind>KEEP_ALL_HISTORY_QOS</kind>
+          </history>
+        </datawriter_qos>
+      </qos_profile>
+    </qos_library>
+
     <domain_library name="myDomainLibrary">
       <domain name="myDomain" domain_id="50">
         <register_type name="vitalSign" type_ref="vitalSign"/>
