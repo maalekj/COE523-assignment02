@@ -24,9 +24,15 @@ with rti.open_connector(
         input.wait()  # Wait for data
         input.take()
         for sample in input.samples.valid_data_iter:
-            # TODO: Implement the logic to store the data in the database or file
+            # store the data in a file as dictionary per line
+            with open("data.txt", "a") as f:
+                f.write(str(sample.get_dictionary()) + "\n")
+
             print(sample.get_dictionary())
 
-            # TODO: for now send the data to the providers, This might change if we decide to store the data in a file or database
-            output.instance.set_dictionary(sample.get_dictionary())
-            output.write()
+            # read the last data added to data.txt file and send it providers
+            with open("data.txt", "r") as f:
+                data = f.readlines()[-1]
+                data = eval(data)
+                output.instance.set_dictionary(data)
+                output.write()
