@@ -14,8 +14,6 @@ if len(sys.argv) < 2:
     )
     sys.exit(1)
 
-print(sys.argv[1])
-print(type(sys.argv[1]))
 os.environ["subscribeIntoPatient"] = sys.argv[1]
 
 
